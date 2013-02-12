@@ -7,8 +7,9 @@ int main (void)
 	MCUSR = 0;
 	WDTCSR = _BV(WDE) | _BV(WDP2) | _BV(WDP0);
 
-	DDRB = _BV(DDB4);
+	DDRB = _BV(DDB2) | _BV(DDB4);
 	DDRD = _BV(DDD5);
+	PORTB = _BV(PB2) | _BV(PB4);
 	PORTD = _BV(PD6);
 
 	ACSR = _BV(ACD);
@@ -42,10 +43,12 @@ ISR(TIMER1_COMPA_vect)
 	if (~PIND & _BV(PD6)) {
 		TCCR0A = _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);
 		TCCR0B = _BV(CS00);
+		PORTB = _BV(PB2);
 	}
 	else {
 		TCCR0A = 0;
 		TCCR0B = 0;
+		PORTB = _BV(PB2) | _BV(PB4);
 		PORTD &= ~_BV(PD5);
 	}
 }
